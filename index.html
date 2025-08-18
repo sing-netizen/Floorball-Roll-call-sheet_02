@@ -1,0 +1,567 @@
+ <!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地板/軟式曲棍球技術改良訓練班點名系統</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .print-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+        }
+        .status-select {
+            min-width: 80px;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>地板/軟式曲棍球技術改良訓練班點名系統</h1>
+        
+        <div class="form-group">
+            <label for="training-date">訓練日期:</label>
+            <input type="date" id="training-date" name="training-date">
+        </div>
+        
+        <div class="form-group">
+            <label for="location">訓練地點:</label>
+            <select id="location" name="location">
+                <option value="">-- 請選擇地點 --</option>
+                <option value="九龍灣體育館">九龍灣體育館</option>
+                <option value="紅磡市政大廈體育館">紅磡市政大廈體育館</option>
+                <option value="港島東體育館">港島東體育館</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="coach-combination">教練組合:</label>
+            <select id="coach-combination" name="coach-combination">
+                <option value="">-- 請選擇教練組合 --</option>
+                <option value="彭家威丶何家瑩">彭家威丶何家瑩</option>
+                <option value="何昌恆丶何家瑩">何昌恆丶何家瑩</option>
+                <option value="彭家威">彭家威</option>
+                <option value="何昌恆">何昌恆</option>
+                <option value="何家瑩">何家瑩</option>
+            </select>
+        </div>
+        
+        <div class="section-title">運動員名單</div>
+        <table id="athletes-table">
+            <thead>
+                <tr>
+                    <th>編號</th>
+                    <th>姓名</th>
+                    <th>出席狀態</th>
+                    <th>備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>羅翹鋒</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>陳卓謙</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>林日朗</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>李浩生</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>陳文輝</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>陳文傑</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>李穎駿</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>呂家華</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>林志忠</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>曹俊業</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>何子鵬</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>吳國浩</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>石振星</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="section-title">融合伙伴名單</div>
+        <table id="partners-table">
+            <thead>
+                <tr>
+                    <th>編號</th>
+                    <th>姓名</th>
+                    <th>出席狀態</th>
+                    <th>備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>14</td>
+                    <td>陳考熒</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>麥偉俊</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>陳芯儀</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td>江韻荍</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td>夏仲文</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+                <tr>
+                    <td>19</td>
+                    <td>黃展悅</td>
+                    <td>
+                        <select class="status-select">
+                            <option value="Yes">Yes: 出席</option>
+                            <option value="Abs">Abs: 請假</option>
+                            <option value="O">O: 無故缺席</option>
+                            <option value="L">L: 遲到</option>
+                            <option value="S">S: 病假</option>
+                            <option value="C">C: 出外比賽</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="備註"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="form-group">
+            <label for="notes">其他備註:</label>
+            <textarea id="notes" name="notes" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+        </div>
+        
+        <div class="buttons">
+            <button class="submit-btn" onclick="submitForm()">提交記錄</button>
+            <button class="print-btn" onclick="printRecord()">印刷記錄</button>
+            <button class="whatsapp-btn" onclick="shareToWhatsApp()">分享至WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        // 設置默認日期為今天
+        document.getElementById('training-date').valueAsDate = new Date();
+        
+        function submitForm() {
+            // 驗證必填字段
+            const date = document.getElementById('training-date').value;
+            const location = document.getElementById('location').value;
+            const coachCombination = document.getElementById('coach-combination').value;
+            
+            if (!date || !location || !coachCombination) {
+                alert('請填寫所有必填字段（日期、地點、教練組合）');
+                return;
+            }
+            
+            // 收集所有出席狀態
+            const athleteStatuses = [];
+            const athleteRows = document.querySelectorAll('#athletes-table tbody tr');
+            athleteRows.forEach(row => {
+                const no = row.cells[0].textContent;
+                const name = row.cells[1].textContent;
+                const status = row.cells[2].querySelector('select').value;
+                const remark = row.cells[3].querySelector('input').value;
+                athleteStatuses.push({no, name, status, remark});
+            });
+            
+            // 收集融合伙伴狀態
+            const partnerStatuses = [];
+            const partnerRows = document.querySelectorAll('#partners-table tbody tr');
+            partnerRows.forEach(row => {
+                const no = row.cells[0].textContent;
+                const name = row.cells[1].textContent;
+                const status = row.cells[2].querySelector('select').value;
+                const remark = row.cells[3].querySelector('input').value;
+                partnerStatuses.push({no, name, status, remark});
+            });
+            
+            // 收集其他備註
+            const notes = document.getElementById('notes').value;
+            
+            // 構建數據對象
+            const record = {
+                date,
+                location,
+                coachCombination,
+                athletes: athleteStatuses,
+                partners: partnerStatuses,
+                notes
+            };
+            
+            // 這裡可以發送到伺服器或存儲在本地
+            console.log('提交的記錄:', record);
+            
+            // 顯示成功消息
+            alert('點名記錄已成功提交！');
+            
+            // 可選：重置表單
+            // document.querySelector('form').reset();
+        }
+        
+        function printRecord() {
+            // 這裡可以實現打印功能
+            // 簡單實現：打印整個頁面
+            window.print();
+            
+            // 更複雜的實現可以生成一個更適合打印的視圖
+        }
+        
+        function shareToWhatsApp() {
+            // 構建分享內容
+            const date = document.getElementById('training-date').value;
+            const location = document.getElementById('location').value;
+            const coachCombination = document.getElementById('coach-combination').value;
+            
+            let message = `地板/軟式曲棍球技術改良訓練班點名記錄\n`;
+            message += `日期: ${date}\n`;
+            message += `地點: ${location}\n`;
+            message += `教練組合: ${coachCombination}\n\n`;
+            
+            message += `運動員出席情況:\n`;
+            const athleteRows = document.querySelectorAll('#athletes-table tbody tr');
+            athleteRows.forEach(row => {
+                const no = row.cells[0].textContent;
+                const name = row.cells[1].textContent;
+                const status = row.cells[2].querySelector('select').value;
+                const remark = row.cells[3].querySelector('input').value;
+                
+                message += `${no}. ${name}: ${status}`;
+                if (remark) message += ` (${remark})`;
+                message += `\n`;
+            });
+            
+            message += `\n融合伙伴出席情況:\n`;
+            const partnerRows = document.querySelectorAll('#partners-table tbody tr');
+            partnerRows.forEach(row => {
+                const no = row.cells[0].textContent;
+                const name = row.cells[1].textContent;
+                const status = row.cells[2].querySelector('select').value;
+                const remark = row.cells[3].querySelector('input').value;
+                
+                message += `${no}. ${name}: ${status}`;
+                if (remark) message += ` (${remark})`;
+                message += `\n`;
+            });
+            
+            const notes = document.getElementById('notes').value;
+            if (notes) {
+                message += `\n其他備註: ${notes}\n`;
+            }
+            
+            // 編碼消息以用於WhatsApp URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // 打開WhatsApp分享鏈接
+            window.open(`https://wa.me/?text=${encodedMessage}`);
+        }
+    </script>
+</body>
+</html>
