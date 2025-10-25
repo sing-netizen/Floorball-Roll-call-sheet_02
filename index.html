@@ -1,13 +1,13 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>软式曲棍球技术改良训练班点名系统</title>
+    <title>軟式曲棍球技術改良訓練班點名系統</title>
     <style>
         * {
             box-sizing: border-box;
-            font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
         }
         body {
             margin: 0;
@@ -19,13 +19,13 @@
             margin: 0 auto;
             background-color: white;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #2c3e50;
             text-align: center;
-            margin-bottom: 25px;
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -34,101 +34,83 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #34495e;
         }
         select, input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .attendance-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        .attendance-table th, .attendance-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        .attendance-table th {
-            background-color: #3498db;
-            color: white;
-        }
-        .attendance-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .attendance-table select {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        .buttons {
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .attendance-select {
+            width: 100%;
+            padding: 5px;
+        }
+        .buttons {
             display: flex;
             justify-content: space-between;
+            margin-top: 20px;
         }
         button {
-            padding: 12px 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-            font-weight: bold;
         }
-        #generateBtn {
-            background-color: #2ecc71;
-            color: white;
+        button:hover {
+            background-color: #2980b9;
         }
-        #whatsappBtn {
-            background-color: #25D366;
-            color: white;
-        }
-        #whatsappBtn:disabled {
-            background-color: #95a5a6;
-            cursor: not-allowed;
-        }
-        .whatsapp-output {
+        #whatsappOutput {
+            width: 100%;
+            height: 300px;
             margin-top: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
+            padding: 10px;
             border: 1px solid #ddd;
-            white-space: pre-line;
+            border-radius: 4px;
+            white-space: pre-wrap;
             font-family: Arial, sans-serif;
-            line-height: 1.5;
         }
         .section-title {
-            font-weight: bold;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            color: #2c3e50;
-        }
-        .status-emoji {
-            margin-right: 5px;
-        }
-        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 8px;
             margin-top: 20px;
-            text-align: center;
-            color: #7f8c8d;
-            font-size: 14px;
+            border-radius: 4px;
         }
+        .status-Yes { color: #27ae60; }
+        .status-Abs { color: #f39c12; }
+        .status-O { color: #e74c3c; }
+        .status-L { color: #9b59b6; }
+        .status-S { color: #3498db; }
+        .status-C { color: #1abc9c; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>软式曲棍球技术改良训练班点名系统</h1>
+        <h1>軟式曲棍球技術改良訓練班點名系統</h1>
         
         <div class="form-group">
-            <label for="date">选择日期</label>
-            <input type="date" id="date" required>
+            <label for="trainingDate">訓練日期</label>
+            <input type="date" id="trainingDate">
         </div>
         
         <div class="form-group">
-            <label for="location">选择地点</label>
+            <label for="location">訓練地點</label>
             <select id="location">
                 <option value="九龍灣體育館">九龍灣體育館</option>
                 <option value="紅磡市政大廈體育館">紅磡市政大廈體育館</option>
@@ -137,8 +119,8 @@
         </div>
         
         <div class="form-group">
-            <label for="coach">选择教练组合</label>
-            <select id="coach">
+            <label for="coachCombination">教練組合</label>
+            <select id="coachCombination">
                 <option value="彭家威、何家瑩">彭家威、何家瑩</option>
                 <option value="何昌恆、何家瑩">何昌恆、何家瑩</option>
                 <option value="彭家威">彭家威</option>
@@ -147,392 +129,191 @@
             </select>
         </div>
         
-        <table class="attendance-table">
+        <div class="section-title">運動員點名</div>
+        <table id="athletesTable">
             <thead>
                 <tr>
-                    <th>编号</th>
+                    <th>編號</th>
                     <th>姓名</th>
-                    <th>类别</th>
-                    <th>出席状态</th>
+                    <th>出席狀態</th>
                 </tr>
             </thead>
-            <tbody id="attendanceBody">
-                <!-- 运动员名单 -->
+            <tbody>
+                <!-- 運動員列表將由JavaScript生成 -->
+            </tbody>
+        </table>
+        
+        <div class="section-title">融合伙伴點名</div>
+        <table id="partnersTable">
+            <thead>
                 <tr>
-                    <td>1</td>
-                    <td>羅翹鋒</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
+                    <th>編號</th>
+                    <th>姓名</th>
+                    <th>出席狀態</th>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>陳卓謙</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>林日朗</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>李浩生</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>陳文輝</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>陳文傑</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>李穎駿</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>呂家華</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>林志忠</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>曹俊業</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>何子鵬</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>吳國浩</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>13</td>
-                    <td>石振星</td>
-                    <td>运动员</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                
-                <!-- 融合伙伴名单 -->
-                <tr>
-                    <td>14</td>
-                    <td>陳考熒</td>
-                    <td>融合伙伴</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>15</td>
-                    <td>麥偉俊</td>
-                    <td>融合伙伴</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td>陳芯儀</td>
-                    <td>融合伙伴</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>17</td>
-                    <td>江韻荍</td>
-                    <td>融合伙伴</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>18</td>
-                    <td>夏仲文</td>
-                    <td>融合伙伴</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>19</td>
-                    <td>黃展悅</td>
-                    <td>融合伙伴</td>
-                    <td>
-                        <select class="status">
-                            <option value="Yes">✅ 出席</option>
-                            <option value="Abs">📝 请假</option>
-                            <option value="O">❌ 无故缺席</option>
-                            <option value="L">⏰ 迟到</option>
-                            <option value="S">🤒 病假</option>
-                            <option value="C">🏆 出外比赛</option>
-                        </select>
-                    </td>
-                </tr>
+            </thead>
+            <tbody>
+                <!-- 融合伙伴列表將由JavaScript生成 -->
             </tbody>
         </table>
         
         <div class="buttons">
-            <button id="generateBtn">生成点名记录</button>
-            <button id="whatsappBtn" disabled>推送至WhatsApp</button>
+            <button id="generateReport">生成點名報告</button>
+            <button id="sendToWhatsApp">推送至WhatsApp</button>
         </div>
         
-        <div class="whatsapp-output" id="whatsappOutput"></div>
-        
-        <div class="footer">
-            此记录由点名系统自动生成
+        <div class="form-group">
+            <label for="whatsappOutput">WhatsApp推送文案</label>
+            <textarea id="whatsappOutput" readonly></textarea>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 设置默认日期为今天
+        // 運動員名單
+        const athletes = [
+            "羅翹鋒", "陳卓謙", "林日朗", "李浩生", "陳文輝", 
+            "陳文傑", "李穎駿", "呂家華", "林志忠", "曹俊業", 
+            "何子鵬", "吳國浩", "石振星"
+        ];
+        
+        // 融合伙伴名單
+        const partners = [
+            "陳考熒", "麥偉俊", "陳芯儀", "江韻荍", "夏仲文", "黃展悅"
+        ];
+        
+        // 出席狀態選項（包含emoji）
+        const attendanceOptions = [
+            { value: "Yes", text: "✅ 出席" },
+            { value: "Abs", text: "📝 請假" },
+            { value: "O", text: "❌ 無故缺席" },
+            { value: "L", text: "⏰ 遲到" },
+            { value: "S", text: "🤒 病假" },
+            { value: "C", text: "🏆 出外比賽" }
+        ];
+        
+        // 初始化表格
+        function initializeTables() {
+            const athletesTable = document.getElementById("athletesTable").getElementsByTagName("tbody")[0];
+            const partnersTable = document.getElementById("partnersTable").getElementsByTagName("tbody")[0];
+            
+            // 填充運動員表格
+            athletes.forEach((name, index) => {
+                const row = athletesTable.insertRow();
+                row.insertCell(0).textContent = index + 1;
+                row.insertCell(1).textContent = name;
+                
+                const statusCell = row.insertCell(2);
+                const select = document.createElement("select");
+                select.className = "attendance-select";
+                
+                attendanceOptions.forEach(option => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = option.value;
+                    optionElement.textContent = option.text;
+                    select.appendChild(optionElement);
+                });
+                
+                statusCell.appendChild(select);
+            });
+            
+            // 填充融合伙伴表格
+            partners.forEach((name, index) => {
+                const row = partnersTable.insertRow();
+                row.insertCell(0).textContent = index + 14;
+                row.insertCell(1).textContent = name;
+                
+                const statusCell = row.insertCell(2);
+                const select = document.createElement("select");
+                select.className = "attendance-select";
+                
+                attendanceOptions.forEach(option => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = option.value;
+                    optionElement.textContent = option.text;
+                    select.appendChild(optionElement);
+                });
+                
+                statusCell.appendChild(select);
+            });
+            
+            // 設置默認日期為今天
             const today = new Date();
             const formattedDate = today.toISOString().split('T')[0];
-            document.getElementById('date').value = formattedDate;
+            document.getElementById("trainingDate").value = formattedDate;
+        }
+        
+        // 生成點名報告
+        function generateReport() {
+            const date = document.getElementById("trainingDate").value;
+            const location = document.getElementById("location").value;
+            const coachCombination = document.getElementById("coachCombination").value;
             
-            const generateBtn = document.getElementById('generateBtn');
-            const whatsappBtn = document.getElementById('whatsappBtn');
-            const whatsappOutput = document.getElementById('whatsappOutput');
+            // 格式化日期顯示
+            const dateObj = new Date(date);
+            const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
             
-            generateBtn.addEventListener('click', function() {
-                const date = document.getElementById('date').value;
-                const location = document.getElementById('location').value;
-                const coach = document.getElementById('coach').value;
-                
-                // 格式化日期显示
-                const dateObj = new Date(date);
-                const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
-                
-                let output = `🏒 软式曲棍球技术改良训练班点名记录 🏒\n\n`;
-                output += `📅 日期：${formattedDate}\n`;
-                output += `⏰ 时间：星期一、六 (18:00-20:00)\n`;
-                output += `📍 地点：${location}\n`;
-                output += `👨‍🏫 负责教练：${coach}\n\n`;
-                
-                // 获取运动员出席状态
-                output += `🏃‍♂️ 运动员名单：\n`;
-                let athleteCount = 0;
-                for (let i = 1; i <= 13; i++) {
-                    const row = document.querySelector(`#attendanceBody tr:nth-child(${i})`);
-                    const name = row.cells[1].textContent;
-                    const statusSelect = row.querySelector('.status');
-                    const statusText = statusSelect.options[statusSelect.selectedIndex].text;
-                    
-                    output += `${i}. ${name} - ${statusText}\n`;
-                    if (statusSelect.value === 'Yes') {
-                        athleteCount++;
-                    }
-                }
-                output += `运动员出席人数：${athleteCount}/13\n\n`;
-                
-                // 获取融合伙伴出席状态
-                output += `🤝 融合伙伴名单：\n`;
-                let partnerCount = 0;
-                for (let i = 14; i <= 19; i++) {
-                    const row = document.querySelector(`#attendanceBody tr:nth-child(${i})`);
-                    const name = row.cells[1].textContent;
-                    const statusSelect = row.querySelector('.status');
-                    const statusText = statusSelect.options[statusSelect.selectedIndex].text;
-                    
-                    output += `${i}. ${name} - ${statusText}\n`;
-                    if (statusSelect.value === 'Yes') {
-                        partnerCount++;
-                    }
-                }
-                output += `融合伙伴出席人数：${partnerCount}/6\n\n`;
-                
-                // 添加生成时间
-                const now = new Date();
-                const generatedTime = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
-                output += `此记录由点名系统自动生成\n生成时间：${generatedTime}`;
-                
-                whatsappOutput.textContent = output;
-                whatsappBtn.disabled = false;
+            let report = `軟式曲棍球技術改良訓練班點名記錄\n`;
+            report += `==============================\n`;
+            report += `日期：${formattedDate}\n`;
+            report += `時間：18:00-20:00\n`;
+            report += `地點：${location}\n`;
+            report += `教練：${coachCombination}\n\n`;
+            
+            // 運動員出席情況
+            report += `🏒 運動員出席情況：\n`;
+            const athleteRows = document.querySelectorAll("#athletesTable tbody tr");
+            athleteRows.forEach(row => {
+                const number = row.cells[0].textContent;
+                const name = row.cells[1].textContent;
+                const status = row.cells[2].querySelector("select").value;
+                const statusText = attendanceOptions.find(opt => opt.value === status).text;
+                report += `${number}. ${name} - ${statusText}\n`;
             });
             
-            whatsappBtn.addEventListener('click', function() {
-                const outputText = whatsappOutput.textContent;
-                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(outputText)}`;
-                window.open(whatsappUrl, '_blank');
+            report += `\n`;
+            
+            // 融合伙伴出席情況
+            report += `🤝 融合伙伴出席情況：\n`;
+            const partnerRows = document.querySelectorAll("#partnersTable tbody tr");
+            partnerRows.forEach(row => {
+                const number = row.cells[0].textContent;
+                const name = row.cells[1].textContent;
+                const status = row.cells[2].querySelector("select").value;
+                const statusText = attendanceOptions.find(opt => opt.value === status).text;
+                report += `${number}. ${name} - ${statusText}\n`;
             });
-        });
+            
+            report += `\n`;
+            report += `此記錄由點名系統自動生成\n`;
+            report += `生成時間：${new Date().toLocaleString('zh-Hant')}`;
+            
+            document.getElementById("whatsappOutput").value = report;
+        }
+        
+        // 推送至WhatsApp
+        function sendToWhatsApp() {
+            const report = document.getElementById("whatsappOutput").value;
+            if (!report) {
+                alert("請先生成點名報告");
+                return;
+            }
+            
+            // 編碼報告內容
+            const encodedReport = encodeURIComponent(report);
+            
+            // 創建WhatsApp分享連結
+            const whatsappUrl = `https://wa.me/?text=${encodedReport}`;
+            
+            // 在新視窗中打開WhatsApp
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // 事件監聽
+        document.getElementById("generateReport").addEventListener("click", generateReport);
+        document.getElementById("sendToWhatsApp").addEventListener("click", sendToWhatsApp);
+        
+        // 初始化
+        document.addEventListener("DOMContentLoaded", initializeTables);
     </script>
 </body>
 </html>
