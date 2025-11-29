@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>软式曲棍球技术改良训练班点名系统</title>
+    <title>軟式曲棍球技術改良訓練班點名系統</title>
     <style>
         * {
             box-sizing: border-box;
-            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
         }
         body {
             margin: 0;
@@ -19,29 +19,16 @@
             margin: 0 auto;
             background-color: white;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
             text-align: center;
             color: #2c3e50;
-            margin-bottom: 20px;
-        }
-        .form-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-            align-items: center;
+            margin-bottom: 30px;
         }
         .form-group {
-            margin-right: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         label {
             display: block;
@@ -49,10 +36,10 @@
             font-weight: bold;
         }
         select, input {
-            padding: 8px 12px;
+            width: 100%;
+            padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 14px;
         }
         table {
             width: 100%;
@@ -65,23 +52,19 @@
             text-align: left;
         }
         th {
-            background-color: #2c3e50;
-            color: white;
+            background-color: #f2f2f2;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .status-select {
+            width: 100%;
+            padding: 5px;
         }
-        .attendance-cell {
-            min-width: 120px;
-        }
-        .action-buttons {
-            display: flex;
-            justify-content: center;
+        .buttons {
             margin-top: 20px;
-            gap: 10px;
+            display: flex;
+            justify-content: space-between;
         }
         button {
-            padding: 10px 20px;
+            padding: 10px 15px;
             background-color: #3498db;
             color: white;
             border: none;
@@ -98,128 +81,124 @@
         .whatsapp-btn:hover {
             background-color: #128C7E;
         }
-        .output-section {
+        .output {
             margin-top: 30px;
             padding: 15px;
-            background-color: #f0f8ff;
+            background-color: #f9f9f9;
             border-radius: 5px;
             white-space: pre-line;
-            font-family: Arial, sans-serif;
             line-height: 1.5;
         }
-        .status-Yes { color: #27ae60; }
-        .status-Abs { color: #f39c12; }
-        .status-O { color: #e74c3c; }
-        .status-L { color: #9b59b6; }
-        .status-S { color: #3498db; }
-        .status-C { color: #1abc9c; }
+        .emoji {
+            font-size: 18px;
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>软式曲棍球技术改良训练班点名系统</h1>
+        <h1>軟式曲棍球技術改良訓練班點名系統</h1>
         
-        <div class="form-section">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="date">📅 日期</label>
-                    <input type="date" id="date">
-                </div>
-                <div class="form-group">
-                    <label for="time">⏰ 时间</label>
-                    <select id="time">
-                        <option value="星期一、六（18:00-20:00）">星期一、六（18:00-20:00）</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="location">📍 地点</label>
-                    <select id="location">
-                        <option value="九龙湾体育馆">九龙湾体育馆</option>
-                        <option value="红磡市政大厦体育馆">红磡市政大厦体育馆</option>
-                        <option value="九龙湾运动场">九龙湾运动场</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="coach">👨‍🏫 负责教练组合</label>
-                    <select id="coach">
-                        <option value="彭家威、何家莹">彭家威、何家莹</option>
-                        <option value="何昌恒、何家莹">何昌恒、何家莹</option>
-                        <option value="彭家威">彭家威</option>
-                        <option value="何昌恒">何昌恒</option>
-                        <option value="何家莹">何家莹</option>
-                    </select>
-                </div>
-            </div>
+        <div class="form-group">
+            <label>📅 日期</label>
+            <input type="date" id="trainingDate">
         </div>
-
-        <table id="attendance-table">
+        
+        <div class="form-group">
+            <label>🕕 時間</label>
+            <select id="trainingTime">
+                <option value="星期一、六 (18:00-20:00)">星期一、六 (18:00-20:00)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>📍 地點</label>
+            <select id="trainingLocation">
+                <option value="九龍灣體育館">九龍灣體育館</option>
+                <option value="紅磡市政大廈體育館">紅磡市政大廈體育館</option>
+                <option value="九龍灣運動場">九龍灣運動場</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>👨‍🏫 負責教練組合</label>
+            <select id="coachGroup">
+                <option value="彭家威、何家瑩">彭家威、何家瑩</option>
+                <option value="何昌恆、何家瑩">何昌恆、何家瑩</option>
+                <option value="彭家威">彭家威</option>
+                <option value="何昌恆">何昌恆</option>
+                <option value="何家瑩">何家瑩</option>
+            </select>
+        </div>
+        
+        <table id="attendanceTable">
             <thead>
                 <tr>
-                    <th>编号</th>
+                    <th>編號</th>
                     <th>姓名</th>
-                    <th>性别</th>
-                    <th>机构名称</th>
-                    <th>出席状态</th>
+                    <th>性別</th>
+                    <th>機構名稱</th>
+                    <th>出席狀態</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- 运动员数据将通过JavaScript动态生成 -->
+                <!-- 運動員數據將由JavaScript動態生成 -->
             </tbody>
         </table>
-
-        <div class="action-buttons">
-            <button id="generate-btn">生成点名记录</button>
-            <button id="whatsapp-btn" class="whatsapp-btn">传送至WhatsApp</button>
+        
+        <div class="buttons">
+            <button id="generateBtn">生成點名記錄</button>
+            <button id="whatsappBtn" class="whatsapp-btn">傳送至 WhatsApp</button>
         </div>
-
-        <div class="output-section" id="output">
-            <!-- 生成的内容将显示在这里 -->
+        
+        <div class="output" id="output">
+            <!-- 點名記錄將在這裡顯示 -->
         </div>
     </div>
 
     <script>
-        // 初始化数据
+        // 運動員和融合伙伴數據
         const participants = [
-            { id: 1, name: "罗翘锋", gender: "M", organization: "特奥之友", type: "运动员" },
-            { id: 2, name: "陈卓谦", gender: "M", organization: "松岭职训", type: "运动员" },
-            { id: 3, name: "林日朗", gender: "M", organization: "观塘展亮", type: "运动员" },
-            { id: 4, name: "李浩生", gender: "M", organization: "循道卫理", type: "运动员" },
-            { id: 5, name: "陈文辉", gender: "M", organization: "特奥之友", type: "运动员" },
-            { id: 6, name: "陈文杰", gender: "M", organization: "特奥之友", type: "运动员" },
-            { id: 7, name: "李颖骏", gender: "M", organization: "特奥之友", type: "运动员" },
-            { id: 8, name: "吕家华", gender: "M", organization: "特奥之友", type: "运动员" },
-            { id: 9, name: "林志忠", gender: "M", organization: "特奥之友", type: "运动员" },
-            { id: 10, name: "曹俊业", gender: "M", organization: "特奥之友", type: "运动员" },
-            { id: 11, name: "何子鹏", gender: "M", organization: "特奥之友", type: "运动员" },
-            { id: 12, name: "吴国浩", gender: "M", organization: "沙田公立", type: "运动员" },
-            { id: 13, name: "石振星", gender: "M", organization: "西区晨辉", type: "运动员" },
-            { id: 14, name: "陈考荧", gender: "F", organization: "融合伙伴", type: "融合伙伴" },
-            { id: 15, name: "麦伟俊", gender: "M", organization: "融合伙伴", type: "融合伙伴" },
-            { id: 16, name: "陈芯仪", gender: "F", organization: "融合伙伴", type: "融合伙伴" },
-            { id: 17, name: "江韵荍", gender: "F", organization: "融合伙伴", type: "融合伙伴" },
+            { id: 1, name: "羅翹鋒", gender: "M", organization: "特奧之友", type: "運動員" },
+            { id: 2, name: "陳卓謙", gender: "M", organization: "松嶺職訓", type: "運動員" },
+            { id: 3, name: "林日朗", gender: "M", organization: "觀塘展亮", type: "運動員" },
+            { id: 4, name: "李浩生", gender: "M", organization: "循道衛理", type: "運動員" },
+            { id: 5, name: "陳文輝", gender: "M", organization: "特奧之友", type: "運動員" },
+            { id: 6, name: "陳文傑", gender: "M", organization: "特奧之友", type: "運動員" },
+            { id: 7, name: "李穎駿", gender: "M", organization: "特奧之友", type: "運動員" },
+            { id: 8, name: "呂家華", gender: "M", organization: "特奧之友", type: "運動員" },
+            { id: 9, name: "林志忠", gender: "M", organization: "特奧之友", type: "運動員" },
+            { id: 10, name: "曹俊業", gender: "M", organization: "特奧之友", type: "運動員" },
+            { id: 11, name: "何子鵬", gender: "M", organization: "特奧之友", type: "運動員" },
+            { id: 12, name: "吳國浩", gender: "M", organization: "沙田公立", type: "運動員" },
+            { id: 13, name: "石振星", gender: "M", organization: "西區晨輝", type: "運動員" },
+            { id: 14, name: "陳考熒", gender: "F", organization: "融合伙伴", type: "融合伙伴" },
+            { id: 15, name: "麥偉俊", gender: "M", organization: "融合伙伴", type: "融合伙伴" },
+            { id: 16, name: "陳芯儀", gender: "F", organization: "融合伙伴", type: "融合伙伴" },
+            { id: 17, name: "江韻荍", gender: "F", organization: "融合伙伴", type: "融合伙伴" },
             { id: 18, name: "夏仲文", gender: "F", organization: "融合伙伴", type: "融合伙伴" },
-            { id: 19, name: "黄展悦", gender: "F", organization: "融合伙伴", type: "融合伙伴" }
+            { id: 19, name: "黃展悅", gender: "F", organization: "融合伙伴", type: "融合伙伴" }
         ];
 
-        // 状态选项与对应的emoji
+        // 出席狀態選項與對應的emoji
         const statusOptions = [
             { value: "Yes", text: "✅ 出席" },
-            { value: "Abs", text: "📝 请假" },
-            { value: "O", text: "❌ 无故缺席" },
-            { value: "L", text: "⏰ 迟到" },
+            { value: "Abs", text: "📝 請假" },
+            { value: "O", text: "❌ 無故缺席" },
+            { value: "L", text: "⏰ 遲到" },
             { value: "S", text: "🤒 病假" },
-            { value: "C", text: "🏆 出外比赛" }
+            { value: "C", text: "🏆 出外比賽" }
         ];
 
         // 初始化表格
-        function initTable() {
-            const tbody = document.querySelector("#attendance-table tbody");
-            tbody.innerHTML = "";
+        function initializeTable() {
+            const tableBody = document.querySelector("#attendanceTable tbody");
+            tableBody.innerHTML = "";
             
             participants.forEach(participant => {
                 const row = document.createElement("tr");
                 
-                // 编号
+                // 編號
                 const idCell = document.createElement("td");
                 idCell.textContent = participant.id;
                 row.appendChild(idCell);
@@ -229,22 +208,20 @@
                 nameCell.textContent = participant.name;
                 row.appendChild(nameCell);
                 
-                // 性别
+                // 性別
                 const genderCell = document.createElement("td");
                 genderCell.textContent = participant.gender === "M" ? "男" : "女";
                 row.appendChild(genderCell);
                 
-                // 机构名称
+                // 機構名稱
                 const orgCell = document.createElement("td");
                 orgCell.textContent = participant.organization;
                 row.appendChild(orgCell);
                 
-                // 出席状态
+                // 出席狀態
                 const statusCell = document.createElement("td");
-                statusCell.className = "attendance-cell";
-                
                 const select = document.createElement("select");
-                select.dataset.id = participant.id;
+                select.className = "status-select";
                 
                 statusOptions.forEach(option => {
                     const optionElement = document.createElement("option");
@@ -253,101 +230,85 @@
                     select.appendChild(optionElement);
                 });
                 
-                // 默认选择"出席"
-                select.value = "Yes";
-                
                 statusCell.appendChild(select);
                 row.appendChild(statusCell);
                 
-                tbody.appendChild(row);
+                tableBody.appendChild(row);
             });
         }
 
-        // 生成点名记录
+        // 生成點名記錄
         function generateAttendanceRecord() {
-            const date = document.getElementById("date").value;
-            const time = document.getElementById("time").value;
-            const location = document.getElementById("location").value;
-            const coach = document.getElementById("coach").value;
+            const date = document.getElementById("trainingDate").value;
+            const time = document.getElementById("trainingTime").value;
+            const location = document.getElementById("trainingLocation").value;
+            const coaches = document.getElementById("coachGroup").value;
             
-            // 获取当前日期时间
-            const now = new Date();
-            const generatedTime = now.toLocaleString("zh-Hant", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit"
-            });
+            // 格式化日期
+            const formattedDate = date ? new Date(date).toLocaleDateString('zh-Hant-TW') : "未選擇日期";
             
-            // 获取所有参与者的状态
-            const statusSelects = document.querySelectorAll("#attendance-table select");
-            const statusMap = {};
+            let output = `軟式曲棍球技術改良訓練班點名記錄\n\n`;
+            output += `📅 日期：${formattedDate}\n`;
+            output += `🕕 時間：${time}\n`;
+            output += `📍 地點：${location}\n`;
+            output += `👨‍🏫 負責教練：${coaches}\n\n`;
             
-            statusSelects.forEach(select => {
-                statusMap[select.dataset.id] = select.value;
-            });
+            // 運動員列表
+            output += `運動員名單：\n`;
+            const tableRows = document.querySelectorAll("#attendanceTable tbody tr");
             
-            // 按状态分类
-            const statusGroups = {};
-            statusOptions.forEach(option => {
-                statusGroups[option.value] = [];
-            });
-            
-            participants.forEach(participant => {
-                const status = statusMap[participant.id];
-                statusGroups[status].push(participant);
-            });
-            
-            // 生成输出内容
-            let output = `软式曲棍球技术改良训练班点名记录\n\n`;
-            output += `📅 日期：${date || "未选择"}\n`;
-            output += `⏰ 时间：${time}\n`;
-            output += `📍 地点：${location}\n`;
-            output += `👨‍🏫 负责教练：${coach}\n\n`;
-            
-            // 按状态输出参与者
-            statusOptions.forEach(option => {
-                const group = statusGroups[option.value];
-                if (group.length > 0) {
-                    output += `${option.text} (${group.length}人)\n`;
+            tableRows.forEach((row, index) => {
+                if (index < 13) { // 前13位是運動員
+                    const name = row.cells[1].textContent;
+                    const statusSelect = row.cells[4].querySelector("select");
+                    const statusText = statusSelect.options[statusSelect.selectedIndex].text;
                     
-                    group.forEach(participant => {
-                        output += `  • ${participant.name} (${participant.gender === "M" ? "男" : "女"}) - ${participant.organization}\n`;
-                    });
-                    
-                    output += `\n`;
+                    output += `${index + 1}. ${name} - ${statusText}\n`;
                 }
             });
             
-            output += `\n此记录由点名系统自动生成\n生成时间：${generatedTime}`;
+            // 融合伙伴列表
+            output += `\n融合伙伴名單：\n`;
+            tableRows.forEach((row, index) => {
+                if (index >= 13) { // 後6位是融合伙伴
+                    const name = row.cells[1].textContent;
+                    const statusSelect = row.cells[4].querySelector("select");
+                    const statusText = statusSelect.options[statusSelect.selectedIndex].text;
+                    
+                    output += `${index + 1}. ${name} - ${statusText}\n`;
+                }
+            });
+            
+            // 添加生成時間
+            const now = new Date();
+            const generatedTime = now.toLocaleString('zh-Hant-TW');
+            output += `\n此記錄由點名系統自動生成\n生成時間：${generatedTime}`;
             
             document.getElementById("output").textContent = output;
         }
 
-        // 传送至WhatsApp
+        // 傳送至WhatsApp
         function sendToWhatsApp() {
-            const output = document.getElementById("output").textContent;
-            if (!output) {
-                alert("请先生成点名记录");
+            const outputText = document.getElementById("output").textContent;
+            if (!outputText) {
+                alert("請先生成點名記錄");
                 return;
             }
             
-            const encodedText = encodeURIComponent(output);
+            const encodedText = encodeURIComponent(outputText);
             const whatsappUrl = `https://wa.me/?text=${encodedText}`;
-            window.open(whatsappUrl, "_blank");
+            window.open(whatsappUrl, '_blank');
         }
 
-        // 设置默认日期为今天
-        document.addEventListener("DOMContentLoaded", function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById("date").value = today;
-            
-            initTable();
-            
-            document.getElementById("generate-btn").addEventListener("click", generateAttendanceRecord);
-            document.getElementById("whatsapp-btn").addEventListener("click", sendToWhatsApp);
-        });
+        // 設置默認日期為今天
+        document.getElementById("trainingDate").valueAsDate = new Date();
+        
+        // 初始化表格
+        initializeTable();
+        
+        // 綁定事件
+        document.getElementById("generateBtn").addEventListener("click", generateAttendanceRecord);
+        document.getElementById("whatsappBtn").addEventListener("click", sendToWhatsApp);
     </script>
 </body>
 </html>
