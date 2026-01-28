@@ -3,301 +3,903 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>乒乓球B隊預備班點名系統</title>
+    <title>香港智障人士體育協會乒乓球隊內部賽計分系統</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
-            font-family: "Microsoft JhengHei", Arial, sans-serif;
-        }
-        body {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
         }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
+        
+        body {
+            background-color: #f5f7fa;
             color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #e53935 0%, #c62828 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: #c62828;
+            margin: 20px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ffcdd2;
+        }
+        
+        h3 {
+            color: #e53935;
+            margin: 15px 0 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .panel {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .main-panel {
+            flex: 2;
+            min-width: 400px;
+        }
+        
+        .player-select {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
             margin-bottom: 20px;
         }
-        .form-group {
-            margin-bottom: 15px;
+        
+        .player-box {
+            flex: 1;
+            min-width: 200px;
         }
-        label {
-            display: block;
-            margin-bottom: 5px;
+        
+        .player-name {
+            font-size: 1.4rem;
             font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            padding: 12px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            margin-top: 10px;
         }
-        select, input {
+        
+        select {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            margin-top: 5px;
         }
-        table {
+        
+        select:focus {
+            border-color: #e53935;
+            outline: none;
+        }
+        
+        .score-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin: 20px 0;
+            font-size: 1.1rem;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .attendance-table {
-            overflow-x: auto;
-        }
-        .button-group {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #4CAF50;
+        
+        .score-table th {
+            background-color: #e53935;
             color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            flex: 1;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #whatsappOutput {
-            margin-top: 20px;
             padding: 15px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        .score-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        
+        .score-input {
+            width: 80px;
+            padding: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .score-input:focus {
+            border-color: #e53935;
+            outline: none;
+        }
+        
+        .winner-cell {
+            background-color: #ffebee;
+            font-weight: bold;
+        }
+        
+        .current-game {
+            background-color: #fff8e1;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .save-btn {
+            background-color: #43a047;
+            color: white;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25d366;
+            color: white;
+        }
+        
+        .reset-btn {
+            background-color: #ff9800;
+            color: white;
+        }
+        
+        .new-game-btn {
+            background-color: #2196f3;
+            color: white;
+        }
+        
+        .result-display {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 5px solid #e53935;
+        }
+        
+        .result-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            color: #2c3e50;
+        }
+        
+        .player-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        
+        .player-list li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #e53935;
+            display: flex;
+            align-items: center;
+        }
+        
+        .player-list li:nth-child(even) {
+            background-color: #f1f8e9;
+        }
+        
+        .player-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #e53935;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+        
+        .saved-games {
+            margin-top: 20px;
+        }
+        
+        .saved-game {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .saved-game-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .load-btn {
+            background-color: #5c6bc0;
+            color: white;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .instructions {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .highlight {
+            background-color: #ffecb3;
+            padding: 3px 6px;
             border-radius: 4px;
-            white-space: pre-line;
-            line-height: 1.5;
         }
-        .whatsapp-button {
-            background-color: #25D366;
-        }
-        .whatsapp-button:hover {
-            background-color: #20bd5f;
-        }
-        .emoji {
-            font-size: 1.2em;
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .panel {
+                min-width: 100%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            button {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>香港智障人士體育協會乒乓球隊內部賽計分系統</h1>
+        <div class="subtitle">專為智障人士及自閉症譜系人士設計 • 五局三勝制</div>
+    </header>
+    
     <div class="container">
-        <h1>乒乓球B隊預備班點名系統</h1>
-        
-        <div class="form-group">
-            <label for="trainingDate">📅 訓練日期</label>
-            <input type="date" id="trainingDate">
-        </div>
-        
-        <div class="form-group">
-            <label for="trainingTime">🕐 訓練時間</label>
-            <select id="trainingTime">
-                <option value="星期四（16:00-18:00）">星期四（16:00-18:00）</option>
-                <option value="星期六（10:00-13:00）">星期六（10:00-13:00）</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="trainingLocation">📍 訓練地點</label>
-            <select id="trainingLocation">
-                <option value="圓洲角體育館">圓洲角體育館</option>
-                <option value="保安道體育館">保安道體育館</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="coach">👨‍🏫 負責教練</label>
-            <select id="coach">
-                <option value="梁金祐">梁金祐</option>
-                <option value="冼佩蓮">冼佩蓮</option>
-                <option value="梁金祐, 冼佩蓮">梁金祐, 冼佩蓮</option>
-            </select>
-        </div>
-        
-        <div class="attendance-table">
-            <table>
+        <div class="panel main-panel">
+            <h2>比賽計分紙</h2>
+            
+            <div class="player-select">
+                <div class="player-box">
+                    <h3>球員 A</h3>
+                    <select id="playerA">
+                        <option value="">請選擇球員</option>
+                        <!-- 球員選項會由JavaScript動態生成 -->
+                    </select>
+                    <div id="playerAName" class="player-name">待選擇</div>
+                </div>
+                
+                <div class="player-box">
+                    <h3>球員 B</h3>
+                    <select id="playerB">
+                        <option value="">請選擇球員</option>
+                        <!-- 球員選項會由JavaScript動態生成 -->
+                    </select>
+                    <div id="playerBName" class="player-name">待選擇</div>
+                </div>
+            </div>
+            
+            <table class="score-table">
                 <thead>
                     <tr>
-                        <th>編號</th>
-                        <th>運動員姓名</th>
-                        <th>出席狀態</th>
+                        <th>局數</th>
+                        <th>球員 A 得分</th>
+                        <th>球員 B 得分</th>
+                        <th>勝方</th>
                     </tr>
                 </thead>
-                <tbody id="attendanceTableBody">
-                    <!-- 運動員列表會由JavaScript生成 -->
+                <tbody id="scoreBody">
+                    <!-- 局數表格會由JavaScript動態生成 -->
                 </tbody>
             </table>
+            
+            <div class="result-display">
+                <div id="resultText" class="result-text">比賽準備中，請選擇球員並輸入比分</div>
+                <div id="gameResult" style="text-align: center; margin-top: 10px; font-size: 1.1rem;"></div>
+            </div>
+            
+            <div class="buttons">
+                <button id="saveBtn" class="save-btn">
+                    <i class="fas fa-save"></i> 儲存比賽記錄
+                </button>
+                <button id="whatsappBtn" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> 分享至 WhatsApp
+                </button>
+                <button id="resetBtn" class="reset-btn">
+                    <i class="fas fa-redo"></i> 重設比分
+                </button>
+                <button id="newGameBtn" class="new-game-btn">
+                    <i class="fas fa-plus-circle"></i> 新比賽
+                </button>
+            </div>
+            
+            <div class="instructions">
+                <p><strong>使用說明：</strong></p>
+                <p>1. 從上方下拉式選單選擇兩位球員</p>
+                <p>2. 在表格中輸入每局比分（11分制）</p>
+                <p>3. 系統會自動計算勝方及比賽結果（<span class="highlight">五局三勝</span>）</p>
+                <p>4. 點擊「儲存比賽記錄」保存當前比分</p>
+                <p>5. 點擊「分享至 WhatsApp」將比賽結果分享給其他人</p>
+            </div>
         </div>
         
-        <div class="button-group">
-            <button id="generateReport">生成點名報告</button>
-            <button id="sendWhatsApp" class="whatsapp-button">傳送至WhatsApp</button>
+        <div class="panel">
+            <h2>球員名單</h2>
+            <ul id="playerList" class="player-list">
+                <!-- 球員名單會由JavaScript動態生成 -->
+            </ul>
+            
+            <div class="saved-games">
+                <h3>已儲存的比賽記錄</h3>
+                <div id="savedGamesList">
+                    <!-- 已儲存的比賽記錄會由JavaScript動態生成 -->
+                </div>
+            </div>
         </div>
-        
-        <div id="whatsappOutput"></div>
     </div>
+    
+    <footer>
+        <p>香港智障人士體育協會 乒乓球隊內部賽計分系統</p>
+        <p>此系統專為智障人士及自閉症譜系人士設計，簡化操作流程，提供清晰視覺反饋</p>
+        <p>© 2023 香港智障人士體育協會 - 乒乓球隊</p>
+    </footer>
 
     <script>
-        // 運動員名單
-        const athletes = [
-            "陳泳偲", "陳紫漩", "羅嘉熙", "黃駿𧙗", "李文灝", 
-            "許銘賢", "華悅恩", "張梓賢", "ALESIVAN", "陳永悅", 
+        // 球員名單
+        const players = [
+            "陳泳偲", "陳紫漩", "羅嘉𤋮", "黃駿祐", "李文灝",
+            "張梓賢", "許銘賢", "華悅恩", "ALESIVAN", "陳永悅",
             "吳家俊", "陳澤賢", "石振星", "張思澈"
         ];
         
-        // 出席狀態選項
-        const attendanceOptions = [
-            { value: "Yes", text: "✅ 出席" },
-            { value: "Abs", text: "📝 請假" },
-            { value: "O", text: "❌ 無故缺席" },
-            { value: "L", text: "⏰ 遲到" },
-            { value: "S", text: "🤒 病假" },
-            { value: "C", text: "🏆 出外比賽" }
-        ];
+        // 當前比賽數據
+        let currentMatch = {
+            playerA: "",
+            playerB: "",
+            scores: [
+                { a: "", b: "", winner: "" },
+                { a: "", b: "", winner: "" },
+                { a: "", b: "", winner: "" },
+                { a: "", b: "", winner: "" },
+                { a: "", b: "", winner: "" }
+            ],
+            winner: "",
+            result: "",
+            date: ""
+        };
         
-        // 初始化表格
-        function initTable() {
-            const tableBody = document.getElementById('attendanceTableBody');
-            tableBody.innerHTML = '';
+        // DOM 元素
+        const playerASelect = document.getElementById('playerA');
+        const playerBSelect = document.getElementById('playerB');
+        const playerANameDiv = document.getElementById('playerAName');
+        const playerBNameDiv = document.getElementById('playerBName');
+        const scoreBody = document.getElementById('scoreBody');
+        const resultText = document.getElementById('resultText');
+        const gameResultDiv = document.getElementById('gameResult');
+        const saveBtn = document.getElementById('saveBtn');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const newGameBtn = document.getElementById('newGameBtn');
+        const playerList = document.getElementById('playerList');
+        const savedGamesList = document.getElementById('savedGamesList');
+        
+        // 初始化球員下拉選單
+        function initPlayerSelects() {
+            // 清空選單
+            playerASelect.innerHTML = '<option value="">請選擇球員</option>';
+            playerBSelect.innerHTML = '<option value="">請選擇球員</option>';
             
-            athletes.forEach((athlete, index) => {
+            // 添加球員選項
+            players.forEach(player => {
+                const optionA = document.createElement('option');
+                optionA.value = player;
+                optionA.textContent = player;
+                playerASelect.appendChild(optionA);
+                
+                const optionB = document.createElement('option');
+                optionB.value = player;
+                optionB.textContent = player;
+                playerBSelect.appendChild(optionB);
+            });
+            
+            // 初始化球員名單顯示
+            initPlayerList();
+        }
+        
+        // 初始化球員名單顯示
+        function initPlayerList() {
+            playerList.innerHTML = '';
+            
+            players.forEach((player, index) => {
+                const li = document.createElement('li');
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'player-number';
+                numberSpan.textContent = index + 1;
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = player;
+                
+                li.appendChild(numberSpan);
+                li.appendChild(nameSpan);
+                playerList.appendChild(li);
+            });
+        }
+        
+        // 初始化比分表格
+        function initScoreTable() {
+            scoreBody.innerHTML = '';
+            
+            for (let i = 0; i < 5; i++) {
                 const row = document.createElement('tr');
+                if (i === 0) row.classList.add('current-game');
                 
-                // 編號
-                const numberCell = document.createElement('td');
-                numberCell.textContent = index + 1;
-                row.appendChild(numberCell);
+                // 局數
+                const gameCell = document.createElement('td');
+                gameCell.textContent = `第${i+1}局`;
+                row.appendChild(gameCell);
                 
-                // 姓名
-                const nameCell = document.createElement('td');
-                nameCell.textContent = athlete;
-                row.appendChild(nameCell);
+                // 球員A得分輸入
+                const scoreACell = document.createElement('td');
+                const scoreAInput = document.createElement('input');
+                scoreAInput.type = 'number';
+                scoreAInput.min = '0';
+                scoreAInput.max = '30';
+                scoreAInput.className = 'score-input';
+                scoreAInput.dataset.game = i;
+                scoreAInput.dataset.player = 'a';
+                scoreAInput.value = currentMatch.scores[i].a;
+                scoreAInput.addEventListener('input', updateScore);
+                scoreACell.appendChild(scoreAInput);
+                row.appendChild(scoreACell);
                 
-                // 狀態下拉選單
-                const statusCell = document.createElement('td');
-                const select = document.createElement('select');
-                select.className = 'attendance-select';
+                // 球員B得分輸入
+                const scoreBCell = document.createElement('td');
+                const scoreBInput = document.createElement('input');
+                scoreBInput.type = 'number';
+                scoreBInput.min = '0';
+                scoreBInput.max = '30';
+                scoreBInput.className = 'score-input';
+                scoreBInput.dataset.game = i;
+                scoreBInput.dataset.player = 'b';
+                scoreBInput.value = currentMatch.scores[i].b;
+                scoreBInput.addEventListener('input', updateScore);
+                scoreBCell.appendChild(scoreBInput);
+                row.appendChild(scoreBCell);
                 
-                attendanceOptions.forEach(option => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option.value;
-                    optionElement.textContent = option.text;
-                    select.appendChild(optionElement);
-                });
+                // 勝方顯示
+                const winnerCell = document.createElement('td');
+                winnerCell.id = `winner-${i}`;
+                winnerCell.className = 'winner-cell';
+                winnerCell.textContent = currentMatch.scores[i].winner || '待定';
+                row.appendChild(winnerCell);
                 
-                statusCell.appendChild(select);
-                row.appendChild(statusCell);
-                
-                tableBody.appendChild(row);
-            });
+                scoreBody.appendChild(row);
+            }
         }
         
-        // 生成點名報告
-        function generateReport() {
-            const date = document.getElementById('trainingDate').value;
-            const time = document.getElementById('trainingTime').value;
-            const location = document.getElementById('trainingLocation').value;
-            const coach = document.getElementById('coach').value;
+        // 更新比分
+        function updateScore(event) {
+            const input = event.target;
+            const gameIndex = parseInt(input.dataset.game);
+            const player = input.dataset.player;
+            const value = input.value;
             
-            // 獲取所有出席狀態
-            const attendanceSelects = document.querySelectorAll('.attendance-select');
-            const attendanceData = [];
+            // 更新當前比賽數據
+            if (player === 'a') {
+                currentMatch.scores[gameIndex].a = value;
+            } else {
+                currentMatch.scores[gameIndex].b = value;
+            }
             
-            attendanceSelects.forEach((select, index) => {
-                attendanceData.push({
-                    name: athletes[index],
-                    status: select.value
-                });
-            });
+            // 更新勝方
+            updateGameWinner(gameIndex);
             
-            // 計算統計
-            const stats = {};
-            attendanceOptions.forEach(option => {
-                stats[option.value] = 0;
-            });
+            // 更新當前進行中的局數樣式
+            updateCurrentGameHighlight();
             
-            attendanceData.forEach(item => {
-                stats[item.status]++;
-            });
-            
-            // 生成報告
-            let report = `🏓 乒乓球B隊預備班點名記錄\n\n`;
-            report += `📅 日期：${date}\n`;
-            report += `🕐 時間：${time}\n`;
-            report += `📍 地點：${location}\n`;
-            report += `👨‍🏫 負責教練：${coach}\n\n`;
-            report += `運動員出席情況：\n`;
-            
-            attendanceData.forEach((item, index) => {
-                const statusText = attendanceOptions.find(opt => opt.value === item.status).text;
-                report += `${index + 1}. ${item.name} - ${statusText}\n`;
-            });
-            
-            report += `\n📊 統計：\n`;
-            attendanceOptions.forEach(option => {
-                report += `${option.text}：${stats[option.value]}人\n`;
-            });
-            
-            const now = new Date();
-            const generatedTime = now.toLocaleString('zh-Hant', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            
-            report += `\n此記錄由點名系統自動生成\n生成時間：${generatedTime}`;
-            
-            document.getElementById('whatsappOutput').textContent = report;
+            // 更新比賽結果
+            updateMatchResult();
         }
         
-        // 傳送至WhatsApp
-        function sendToWhatsApp() {
-            const report = document.getElementById('whatsappOutput').textContent;
-            if (!report) {
-                alert('請先生成點名報告');
+        // 更新單局勝方
+        function updateGameWinner(gameIndex) {
+            const scoreA = currentMatch.scores[gameIndex].a;
+            const scoreB = currentMatch.scores[gameIndex].b;
+            const winnerCell = document.getElementById(`winner-${gameIndex}`);
+            
+            // 檢查是否兩方都有分數
+            if (scoreA && scoreB) {
+                const numA = parseInt(scoreA);
+                const numB = parseInt(scoreB);
+                
+                // 檢查是否有效比分（乒乓球通常至少一方達到11分且領先2分）
+                if ((numA >= 11 || numB >= 11) && Math.abs(numA - numB) >= 2) {
+                    if (numA > numB) {
+                        currentMatch.scores[gameIndex].winner = currentMatch.playerA || '球員 A';
+                        winnerCell.textContent = currentMatch.playerA || '球員 A';
+                    } else {
+                        currentMatch.scores[gameIndex].winner = currentMatch.playerB || '球員 B';
+                        winnerCell.textContent = currentMatch.playerB || '球員 B';
+                    }
+                } else {
+                    currentMatch.scores[gameIndex].winner = '比分無效';
+                    winnerCell.textContent = '比分無效';
+                }
+            } else {
+                currentMatch.scores[gameIndex].winner = '';
+                winnerCell.textContent = '待定';
+            }
+        }
+        
+        // 更新當前進行中的局數樣式
+        function updateCurrentGameHighlight() {
+            // 清除所有行的樣式
+            const rows = scoreBody.querySelectorAll('tr');
+            rows.forEach(row => row.classList.remove('current-game'));
+            
+            // 找到第一個未完成的局數
+            for (let i = 0; i < 5; i++) {
+                if (!currentMatch.scores[i].a || !currentMatch.scores[i].b) {
+                    rows[i].classList.add('current-game');
+                    break;
+                }
+                
+                // 如果所有局數都已完成，標記最後一局
+                if (i === 4) {
+                    rows[i].classList.add('current-game');
+                }
+            }
+        }
+        
+        // 更新比賽結果
+        function updateMatchResult() {
+            if (!currentMatch.playerA || !currentMatch.playerB) {
+                resultText.textContent = '請選擇兩位球員開始比賽';
+                gameResultDiv.textContent = '';
                 return;
             }
             
-            const encodedReport = encodeURIComponent(report);
-            const whatsappUrl = `https://wa.me/?text=${encodedReport}`;
+            // 計算勝局數
+            let winsA = 0;
+            let winsB = 0;
+            
+            currentMatch.scores.forEach(score => {
+                if (score.winner === currentMatch.playerA) winsA++;
+                if (score.winner === currentMatch.playerB) winsB++;
+            });
+            
+            // 更新結果顯示
+            if (winsA >= 3 || winsB >= 3) {
+                // 比賽已結束
+                const winner = winsA >= 3 ? currentMatch.playerA : currentMatch.playerB;
+                const finalScore = `${winsA} : ${winsB}`;
+                
+                resultText.textContent = `比賽結束！勝方：${winner}`;
+                gameResultDiv.textContent = `總比分：${finalScore}`;
+                gameResultDiv.style.color = '#e53935';
+                gameResultDiv.style.fontWeight = 'bold';
+                
+                // 儲存結果
+                currentMatch.winner = winner;
+                currentMatch.result = `${winsA}:${winsB}`;
+            } else {
+                // 比賽進行中
+                resultText.textContent = `比賽進行中：${currentMatch.playerA} ${winsA} - ${winsB} ${currentMatch.playerB}`;
+                gameResultDiv.textContent = `還需要 ${3 - Math.max(winsA, winsB)} 局勝利`;
+                gameResultDiv.style.color = '#ff9800';
+            }
+        }
+        
+        // 儲存比賽記錄
+        function saveMatch() {
+            if (!currentMatch.playerA || !currentMatch.playerB) {
+                alert('請先選擇兩位球員！');
+                return;
+            }
+            
+            // 檢查是否有至少一局比分
+            let hasScore = false;
+            currentMatch.scores.forEach(score => {
+                if (score.a || score.b) hasScore = true;
+            });
+            
+            if (!hasScore) {
+                alert('請至少輸入一局比分！');
+                return;
+            }
+            
+            // 添加時間戳
+            currentMatch.date = new Date().toLocaleString('zh-Hant');
+            
+            // 從本地儲存獲取已存記錄
+            let savedMatches = JSON.parse(localStorage.getItem('tableTennisMatches') || '[]');
+            
+            // 添加新記錄
+            savedMatches.unshift({...currentMatch});
+            
+            // 只保留最近的10個記錄
+            if (savedMatches.length > 10) {
+                savedMatches = savedMatches.slice(0, 10);
+            }
+            
+            // 儲存到本地儲存
+            localStorage.setItem('tableTennisMatches', JSON.stringify(savedMatches));
+            
+            // 更新顯示
+            loadSavedMatches();
+            
+            alert('比賽記錄已儲存！');
+        }
+        
+        // 載入已儲存的比賽記錄
+        function loadSavedMatches() {
+            savedGamesList.innerHTML = '';
+            
+            const savedMatches = JSON.parse(localStorage.getItem('tableTennisMatches') || '[]');
+            
+            if (savedMatches.length === 0) {
+                savedGamesList.innerHTML = '<p>暫無儲存的比賽記錄</p>';
+                return;
+            }
+            
+            savedMatches.forEach((match, index) => {
+                const gameDiv = document.createElement('div');
+                gameDiv.className = 'saved-game';
+                
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'saved-game-header';
+                
+                const titleSpan = document.createElement('span');
+                titleSpan.textContent = `${match.playerA} vs ${match.playerB}`;
+                
+                const dateSpan = document.createElement('span');
+                dateSpan.textContent = match.date;
+                
+                headerDiv.appendChild(titleSpan);
+                headerDiv.appendChild(dateSpan);
+                
+                const resultDiv = document.createElement('div');
+                resultDiv.style.marginBottom = '10px';
+                resultDiv.innerHTML = `<strong>結果：</strong>${match.winner} 勝 (${match.result})`;
+                
+                const loadBtn = document.createElement('button');
+                loadBtn.className = 'load-btn';
+                loadBtn.innerHTML = '<i class="fas fa-upload"></i> 載入此記錄';
+                loadBtn.addEventListener('click', () => loadMatch(match));
+                
+                gameDiv.appendChild(headerDiv);
+                gameDiv.appendChild(resultDiv);
+                gameDiv.appendChild(loadBtn);
+                
+                savedGamesList.appendChild(gameDiv);
+            });
+        }
+        
+        // 載入特定比賽記錄
+        function loadMatch(match) {
+            currentMatch = JSON.parse(JSON.stringify(match));
+            
+            // 更新球員選擇
+            playerASelect.value = currentMatch.playerA;
+            playerBSelect.value = currentMatch.playerB;
+            playerANameDiv.textContent = currentMatch.playerA;
+            playerBNameDiv.textContent = currentMatch.playerB;
+            
+            // 更新比分表格
+            initScoreTable();
+            
+            // 更新比賽結果
+            updateMatchResult();
+            
+            alert('比賽記錄已載入！');
+        }
+        
+        // 分享到WhatsApp
+        function shareToWhatsApp() {
+            if (!currentMatch.playerA || !currentMatch.playerB) {
+                alert('請先選擇兩位球員！');
+                return;
+            }
+            
+            // 計算勝局數
+            let winsA = 0;
+            let winsB = 0;
+            
+            currentMatch.scores.forEach(score => {
+                if (score.winner === currentMatch.playerA) winsA++;
+                if (score.winner === currentMatch.playerB) winsB++;
+            });
+            
+            // 建立分享訊息
+            let message = `香港智障人士體育協會乒乓球隊內部賽結果\n`;
+            message += `比賽：${currentMatch.playerA} vs ${currentMatch.playerB}\n`;
+            message += `日期：${currentMatch.date || new Date().toLocaleDateString('zh-Hant')}\n\n`;
+            
+            // 添加每局比分
+            currentMatch.scores.forEach((score, index) => {
+                if (score.a || score.b) {
+                    message += `第${index+1}局：${score.a || '0'} - ${score.b || '0'}`;
+                    if (score.winner) {
+                        message += ` (勝方：${score.winner})`;
+                    }
+                    message += '\n';
+                }
+            });
+            
+            message += `\n總比分：${winsA} : ${winsB}\n`;
+            
+            if (winsA >= 3 || winsB >= 3) {
+                const winner = winsA >= 3 ? currentMatch.playerA : currentMatch.playerB;
+                message += `勝方：${winner}`;
+            } else {
+                message += `比賽進行中`;
+            }
+            
+            // 編碼訊息用於WhatsApp連結
+            const encodedMessage = encodeURIComponent(message);
+            
+            // 建立WhatsApp分享連結
+            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+            
+            // 在新視窗打開連結
             window.open(whatsappUrl, '_blank');
         }
         
-        // 設置默認日期為今天
-        function setDefaultDate() {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            const todayString = `${year}-${month}-${day}`;
-            document.getElementById('trainingDate').value = todayString;
+        // 重設比分
+        function resetScores() {
+            if (confirm('確定要重設所有比分嗎？')) {
+                currentMatch.scores = [
+                    { a: "", b: "", winner: "" },
+                    { a: "", b: "", winner: "" },
+                    { a: "", b: "", winner: "" },
+                    { a: "", b: "", winner: "" },
+                    { a: "", b: "", winner: "" }
+                ];
+                
+                initScoreTable();
+                updateMatchResult();
+            }
+        }
+        
+        // 新比賽
+        function newGame() {
+            if (confirm('開始新比賽會清除當前比分，確定要繼續嗎？')) {
+                currentMatch = {
+                    playerA: "",
+                    playerB: "",
+                    scores: [
+                        { a: "", b: "", winner: "" },
+                        { a: "", b: "", winner: "" },
+                        { a: "", b: "", winner: "" },
+                        { a: "", b: "", winner: "" },
+                        { a: "", b: "", winner: "" }
+                    ],
+                    winner: "",
+                    result: "",
+                    date: ""
+                };
+                
+                playerASelect.value = "";
+                playerBSelect.value = "";
+                playerANameDiv.textContent = "待選擇";
+                playerBNameDiv.textContent = "待選擇";
+                
+                initScoreTable();
+                updateMatchResult();
+            }
         }
         
         // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            initTable();
-            setDefaultDate();
+        function init() {
+            // 初始化球員選單
+            initPlayerSelects();
             
-            document.getElementById('generateReport').addEventListener('click', generateReport);
-            document.getElementById('sendWhatsApp').addEventListener('click', sendToWhatsApp);
-        });
+            // 初始化比分表格
+            initScoreTable();
+            
+            // 載入已儲存的比賽記錄
+            loadSavedMatches();
+            
+            // 事件監聽器
+            playerASelect.addEventListener('change', function() {
+                currentMatch.playerA = this.value;
+                playerANameDiv.textContent = this.value || '待選擇';
+                updateMatchResult();
+            });
+            
+            playerBSelect.addEventListener('change', function() {
+                currentMatch.playerB = this.value;
+                playerBNameDiv.textContent = this.value || '待選擇';
+                updateMatchResult();
+            });
+            
+            saveBtn.addEventListener('click', saveMatch);
+            whatsappBtn.addEventListener('click', shareToWhatsApp);
+            resetBtn.addEventListener('click', resetScores);
+            newGameBtn.addEventListener('click', newGame);
+        }
+        
+        // 當頁面載入完成後初始化
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
