@@ -1,314 +1,343 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>軟式曲棍球技術改良訓練班 - 網上點名系統</title>
+    <!-- 引入 Font Awesome 6 (免費圖標，用於簡單UI) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
-            font-family: 'Segoe UI', 'Noto Sans TC', Roboto, 'Helvetica Neue', sans-serif;
-            background: #f0f4f8;
+            background: #f0f7ff;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
             padding: 20px;
-            color: #1e2a3a;
+            color: #1e2a3e;
         }
-
-        /* 主容器 */
         .container {
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
             background: white;
-            border-radius: 28px;
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
             overflow: hidden;
-            padding: 24px 28px 36px;
+            padding: 24px 28px 40px 28px;
         }
-
-        /* 標題區 + logo */
+        /* 頭部區域：logo + 標題 */
         .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 20px;
             flex-wrap: wrap;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 20px;
-            margin-bottom: 24px;
+            border-bottom: 3px solid #1e6f3f;
+            padding-bottom: 18px;
+            margin-bottom: 28px;
+        }
+        .logo-area {
+            flex-shrink: 0;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 8px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-area img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+        .logo-text {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #1e6f3f;
+            border-left: 2px solid #ccc;
+            padding-left: 12px;
         }
         .title-section h1 {
             font-size: 1.8rem;
-            color: #0f3b2c;
+            color: #1a4d2e;
             letter-spacing: 1px;
         }
         .title-section p {
-            color: #2c5f4e;
-            margin-top: 6px;
+            color: #2c5a3b;
             font-weight: 500;
         }
-        .logo-area {
-            background: #fef9e6;
-            padding: 8px 18px;
+        /* 資訊欄位卡片 */
+        .info-bar {
+            background: #eef3fc;
+            border-radius: 28px;
+            padding: 16px 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-bottom: 32px;
+            font-size: 1rem;
+            font-weight: 500;
+            align-items: center;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 6px 16px;
             border-radius: 40px;
-            border: 1px solid #d4af7a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .info-item i, .info-item span.emoji-only {
+            font-size: 1.3rem;
+        }
+        select {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 32px;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .coach-group {
+            background: white;
+            border-radius: 40px;
+            padding: 6px 16px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        .logo-text {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #b76e2e;
-        }
-        .fake-logo {
-            background: #2c5f4e;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 32px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* 控制列 (日期, 場地, 教練) */
-        .controls-grid {
-            background: #f8fafc;
-            padding: 18px 20px;
-            border-radius: 24px;
-            margin-bottom: 28px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-items: flex-end;
-            border: 1px solid #e2edf2;
-        }
-        .control-item {
-            flex: 1;
-            min-width: 180px;
-        }
-        .control-item label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #1e4a3b;
-            font-size: 0.85rem;
-        }
-        .control-item select, .control-item input {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 20px;
-            border: 1px solid #cbd5e1;
+        .date-picker {
             background: white;
-            font-size: 0.9rem;
-            font-family: inherit;
-        }
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-        button {
-            background: #1e6f5c;
-            border: none;
-            padding: 12px 20px;
+            padding: 4px 12px;
             border-radius: 40px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: 0.2s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        input[type="date"] {
+            border: 1px solid #cbd5e1;
+            border-radius: 28px;
+            padding: 6px 12px;
             font-family: inherit;
         }
-        button:hover {
-            background: #0e4f41;
-            transform: translateY(-1px);
-        }
-        .btn-wa {
-            background: #25D366;
-        }
-        .btn-wa:hover {
-            background: #128C7E;
-        }
-
         /* 表格區域 */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 24px 0 12px 0;
+            padding-left: 8px;
+            border-left: 8px solid #2b8c5e;
+        }
         .table-wrapper {
             overflow-x: auto;
-            margin-top: 20px;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+            border-radius: 24px;
+            border: 1px solid #e2edf2;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.85rem;
-            min-width: 800px;
+            min-width: 700px;
         }
         th {
-            background: #eef2f5;
-            padding: 14px 8px;
+            background: #1f6e47;
+            color: white;
+            padding: 12px 8px;
+            font-weight: 600;
             text-align: center;
-            font-weight: 700;
-            color: #1e3a2f;
-            border-bottom: 2px solid #cbdadf;
+            border-right: 1px solid #39875c;
         }
         td {
-            padding: 12px 8px;
+            padding: 10px 6px;
+            border-bottom: 1px solid #dce7ef;
             text-align: center;
-            border-bottom: 1px solid #e2edf2;
             vertical-align: middle;
+            background-color: #fff;
         }
-        .section-header {
-            background: #d9e8e3;
-            font-weight: bold;
-            text-align: left;
-            padding-left: 16px;
+        tr:hover td {
+            background-color: #fafef7;
         }
-        select.status-select {
-            padding: 6px 10px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            border: 1px solid #b9cdc4;
+        .status-select {
+            font-size: 1rem;
+            padding: 5px 8px;
+            border-radius: 32px;
+            border: 1px solid #cbd5e1;
             background: white;
+            width: 100px;
+            text-align: center;
             cursor: pointer;
+        }
+        .org-name, .gender-badge {
+            font-size: 0.8rem;
             font-weight: 500;
         }
-        .org-name, .member-name {
-            font-weight: 500;
+        .gender-badge {
+            background: #eef2ff;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 40px;
         }
-        .gender-icon {
-            font-weight: normal;
+        /* 按鈕區 */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0 20px;
+        }
+        .btn {
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #eef2f5;
+            color: #1e2a3e;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-primary {
+            background: #1f6e47;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .btn-primary:hover {
+            background: #0f5436;
+            transform: translateY(-2px);
+        }
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        .btn-whatsapp:hover {
+            background: #1da858;
+        }
+        /* 文案預覽卡片 */
+        .preview-card {
+            background: #fef9e6;
+            border-radius: 28px;
+            padding: 20px 24px;
+            margin-top: 24px;
+            border: 1px solid #ffe0a3;
+        }
+        .preview-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .wa-text {
+            background: white;
+            padding: 18px;
+            border-radius: 24px;
+            font-family: 'Courier New', 'SF Mono', monospace;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
         }
         footer {
-            margin-top: 30px;
-            font-size: 0.7rem;
             text-align: center;
-            color: #5e7c6e;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 20px;
+            font-size: 0.75rem;
+            color: #6c7a89;
+            margin-top: 30px;
+            border-top: 1px solid #dee4e9;
+            padding-top: 18px;
         }
-        .wa-preview {
-            background: #fef9e3;
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 28px;
-            border-left: 6px solid #25D366;
-            font-family: monospace;
-            white-space: pre-wrap;
-            font-size: 0.85rem;
-            max-height: 380px;
-            overflow-y: auto;
-        }
-        .wa-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
-        h3 {
-            color: #0f3b2c;
-            margin: 16px 0 8px;
-        }
-        .badge-emoji {
-            font-size: 1.1rem;
+        @media (max-width: 680px) {
+            .container {
+                padding: 16px;
+            }
+            .info-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <!-- 協會Logo + 標題 -->
     <div class="header">
+        <div class="logo-area">
+            <!-- 中國香港智障人士體育協會 logo 內嵌SVG (簡單文字圖案風格，確保顯示logo) -->
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'%3E%3Crect width='200' height='80' fill='%231f6e47' rx='12'/%3E%3Ctext x='20' y='48' font-family='Arial, sans-serif' font-size='20' fill='white' font-weight='bold'%3E中國香港智障人士體育協會%3C/text%3E%3Ctext x='160' y='62' font-size='14' fill='%23FFD966'%3EHKSAPID%3C/text%3E%3C/svg%3E" alt="HKSAPID Logo">
+            <div class="logo-text">軟式曲棍球<br>技術改良班</div>
+        </div>
         <div class="title-section">
             <h1>🏑 軟式曲棍球技術改良訓練班</h1>
-            <p>📍 九龍灣體育館 | 教練團隊：彭家威、何昌恆、何家瑩、林建琼</p>
-        </div>
-        <div class="logo-area">
-            <div class="fake-logo">HKSAPID</div>
-            <div class="logo-text">中國香港智障人士體育協會</div>
+            <p>點名系統 · 出席紀錄 · 即時WhatsApp推送</p>
         </div>
     </div>
 
-    <!-- 日期、場地、教練組合 (場地固定九龍灣，但使用下拉式選單維持只有一個選項) -->
-    <div class="controls-grid">
-        <div class="control-item">
-            <label>📅 訓練日期</label>
-            <input type="date" id="trainingDate" value="2025-02-24">
-        </div>
-        <div class="control-item">
-            <label>🏟️ 體育館</label>
+    <!-- 訓練資訊欄 (日期/時間/地點/教練下拉) -->
+    <div class="info-bar">
+        <div class="info-item"><span class="emoji-only">📅</span> 日期: <input type="date" id="sessionDate" value="2025-03-31"></div>
+        <div class="info-item"><span class="emoji-only">⏰</span> 時間: 星期一丶六 (18:00-20:00)</div>
+        <div class="info-item"><span class="emoji-only">📍</span> 地點: 
             <select id="venueSelect">
                 <option value="九龍灣體育館" selected>九龍灣體育館</option>
             </select>
         </div>
-        <div class="control-item">
-            <label>👨‍🏫 負責教練 (組合)</label>
+        <div class="info-item"><span class="emoji-only">🧑‍🏫</span> 負責教練組合:
             <select id="coachSelect">
-                <option value="彭家威、何昌恆">彭家威、何昌恆</option>
+                <option value="彭家威丶何昌恆">彭家威丶何昌恆</option>
                 <option value="彭家威">彭家威</option>
                 <option value="何昌恆">何昌恆</option>
-                <option value="彭家威、何家瑩">彭家威、何家瑩</option>
-                <option value="林建琼、何昌恆">林建琼、何昌恆</option>
             </select>
         </div>
-        <div class="btn-group">
-            <button id="generateWaBtn">📱 生成 WhatsApp 文案</button>
-            <button id="sendWhatsAppBtn" class="btn-wa">📲 上傳至 WhatsApp 傳送</button>
-        </div>
     </div>
 
-    <!-- 點名表格: 運動員 + 跟操運動員 + 融合伙伴 全部整合並加上機構 & 性別欄位 -->
-    <h3>🏅 運動員名單</h3>
+    <!-- 運動員表格 (含機構名稱,性別欄位,狀態下拉) -->
+    <div class="section-title"><span>🏅 運動員名單</span></div>
     <div class="table-wrapper">
-        <table id="attendanceTable">
+        <table id="athleteTable">
             <thead>
-                <tr>
-                    <th>機構名稱</th><th>姓名</th><th>性別</th><th>出席狀態 (含圖示)</th>
-                </tr>
+                <tr><th>機構名稱</th><th>姓名</th><th>性別</th><th>出席狀態</th></tr>
             </thead>
-            <tbody id="athleteTbody">
-                <!-- JS 動態產生運動員 (1~13) 及跟操運動員(14) -->
-            </tbody>
+            <tbody id="athleteTbody"></tbody>
         </table>
     </div>
 
-    <h3>🤝 融合伙伴名單</h3>
+    <!-- 跟操運動員名單 -->
+    <div class="section-title"><span>🏋️ 跟操運動員名單</span></div>
     <div class="table-wrapper">
-        <table>
-            <thead><tr><th>機構名稱</th><th>姓名</th><th>性別</th><th>出席狀態 (含圖示)</th></tr></thead>
-            <tbody id="partnerTbody"></tbody>
-        </table>
+        <table id="trialTable"><thead><tr><th>機構名稱</th><th>姓名</th><th>性別</th><th>出席狀態</th></tr></thead><tbody id="trialTbody"></tbody></table>
     </div>
 
-    <!-- WhatsApp 預覽區塊 -->
-    <div class="wa-preview" id="waPreviewArea">
-        <div class="wa-header">
-            <strong>📲 WhatsApp 文案預覽</strong>
-            <span style="font-size:0.7rem;">點擊「上傳至 WhatsApp 傳送」即可分享</span>
-        </div>
-        <div id="waMessageContent">尚未生成文案，請按「生成 WhatsApp 文案」</div>
+    <!-- 融合伙伴名單 -->
+    <div class="section-title"><span>🤝 融合伙伴名單</span></div>
+    <div class="table-wrapper">
+        <table id="partnerTable"><thead><tr><th>機構名稱</th><th>姓名</th><th>性別</th><th>出席狀態</th></tr></thead><tbody id="partnerTbody"></tbody></div>
     </div>
-    <footer>
-        此記錄由點名系統自動生成 · 系統時間會自動偵測並顯示於文案末端
-    </footer>
+
+    <!-- 按鈕群 -->
+    <div class="actions">
+        <button class="btn btn-primary" id="generateWABtn"><i class="fab fa-whatsapp"></i> 生成WhatsApp文案</button>
+        <button class="btn btn-whatsapp" id="pushWhatsAppBtn"><i class="fab fa-whatsapp"></i> 推送至 WhatsApp</button>
+    </div>
+
+    <!-- 文案預覽區域 -->
+    <div class="preview-card">
+        <div class="preview-header"><span>📄 文案預覽 (適合WhatsApp推送)</span></div>
+        <div id="waPreview" class="wa-text">點擊「生成WhatsApp文案」以顯示點名記錄...</div>
+    </div>
+    <footer>此記錄由點名系統自動生成 · 文案生成時間: <span id="generatedTime">--</span></footer>
 </div>
 
 <script>
-    // ---------- 定義出席狀態選項 (含 Emoji) ----------
-    const STATUS_OPTIONS = [
-        { value: "Yes", label: "✅ Yes 出席", emoji: "✅" },
-        { value: "Abs", label: "❌ Abs 請假", emoji: "❌" },
-        { value: "O", label: "⚠️ O 無故缺席", emoji: "⚠️" },
-        { value: "L", label: "⏰ L 遲到", emoji: "⏰" },
-        { value: "S", label: "🤒 S 病假", emoji: "🤒" },
-        { value: "C", label: "🏆 C 出外比賽", emoji: "🏆" }
-    ];
-
-    // ---------- 運動員資料 (機構,姓名,性別, 類別: athlete / trial) ----------
-    // 運動員 1~13 (正選)
-    const athletes = [
+    // ---------- 定義數據 (運動員、跟操、融合伙伴，內含機構名稱及性別) ----------
+    // 運動員 (根據原始清單，性別M)
+    const athletesData = [
         { org: "特奧之友", name: "羅翹鋒", gender: "M" },
         { org: "松嶺職訓", name: "陳卓謙", gender: "M" },
         { org: "觀塘展亮", name: "林日朗", gender: "M" },
@@ -323,233 +352,206 @@
         { org: "沙田公立", name: "吳國浩", gender: "M" },
         { org: "西區晨輝", name: "石振星", gender: "M" }
     ];
-    // 跟操運動員 (第14位)
+    // 跟操運動員 (原本第14位: 啟愛 鄧梓謙 男)
     const trialAthletes = [
         { org: "啟愛", name: "鄧梓謙", gender: "M" }
     ];
-    // 融合伙伴 (清單)
-    const partners = [
+    // 融合伙伴 (16-20, 性別修正: 夏仲文原本為F但名單顯示F，但姓名似男，按原文保留F; 黃展悅F; 陳考熒F; 麥偉俊M; 陳芯儀F; 江韻荍F)
+    const partnersData = [
         { org: "融合伙伴", name: "陳考熒", gender: "F" },
         { org: "融合伙伴", name: "麥偉俊", gender: "M" },
         { org: "融合伙伴", name: "陳芯儀", gender: "F" },
         { org: "融合伙伴", name: "江韻荍", gender: "F" },
-        { org: "融合伙伴", name: "夏仲文", gender: "F" },    // 按照原文性別F
+        { org: "融合伙伴", name: "夏仲文", gender: "F" },   // 按原本F
         { org: "融合伙伴", name: "黃展悅", gender: "F" }
     ];
 
-    // 儲存所有出席狀態 (key 為 id, 初始預設 Yes)
-    let statusMap = new Map(); // key: "athlete-0" , "trial-0", "partner-0"
+    // 狀態映射 + emoji (每種狀態唯一emoji)
+    const statusMap = [
+        { value: "Yes", label: "✅ 出席", emoji: "✅" },
+        { value: "Abs", label: "📝 請假", emoji: "📝" },
+        { value: "O", label: "❌ 無故缺席", emoji: "❌" },
+        { value: "L", label: "⏰ 遲到", emoji: "⏰" },
+        { value: "S", label: "🤒 病假", emoji: "🤒" },
+        { value: "C", label: "🏆 出外比賽", emoji: "🏆" }
+    ];
+    const statusValueToEmoji = {
+        "Yes": "✅", "Abs": "📝", "O": "❌", "L": "⏰", "S": "🤒", "C": "🏆"
+    };
+    const statusValueToLabel = {
+        "Yes": "出席", "Abs": "請假", "O": "無故缺席", "L": "遲到", "S": "病假", "C": "出外比賽"
+    };
 
-    // 初始化狀態 (全部預設出席 Yes)
-    function initStatus() {
-        // 運動員
-        athletes.forEach((_, idx) => { statusMap.set(`athlete-${idx}`, "Yes"); });
-        // 跟操運動員
-        trialAthletes.forEach((_, idx) => { statusMap.set(`trial-${idx}`, "Yes"); });
-        // 伙伴
-        partners.forEach((_, idx) => { statusMap.set(`partner-${idx}`, "Yes"); });
+    // 儲存每個人的狀態 (以id區分)
+    let athleteStatus = [];
+    let trialStatus = [];
+    let partnerStatus = [];
+
+    // 初始化表格渲染 & 狀態下拉 (帶emoji選項)
+    function renderTable() {
+        renderTableData("athleteTbody", athletesData, athleteStatus, "athlete");
+        renderTableData("trialTbody", trialAthletes, trialStatus, "trial");
+        renderTableData("partnerTbody", partnersData, partnerStatus, "partner");
     }
 
-    // 產生下拉式選單 HTML (含 emoji 顯示)
-    function renderStatusSelect(id, currentStatus) {
-        let selectHtml = `<select class="status-select" data-id="${id}">`;
-        for (let opt of STATUS_OPTIONS) {
-            let selected = (currentStatus === opt.value) ? 'selected' : '';
-            // 選項顯示 emoji + 文字標籤
-            selectHtml += `<option value="${opt.value}" ${selected}>${opt.emoji} ${opt.label}</option>`;
-        }
-        selectHtml += `</select>`;
-        return selectHtml;
-    }
-
-    // 性別顯示轉換 (M/F 轉 男/女)
-    function formatGender(g) {
-        if(g === 'M') return '男 ♂';
-        if(g === 'F') return '女 ♀';
-        return g;
-    }
-
-    // 渲染整個點名表格 (運動員+跟操+伙伴)
-    function renderTables() {
-        // 運動員表格 (包含正選運動員 跟操運動員 但為獨立分類? 按照要求: "跟操運動員名單這一欄" 但原先架構要加返，我們在運動員表格內加 "跟操運動員" 區塊? 
-        // 根據原文件: 運動員名單1~13，跟操運動員名單14 (鄧梓謙)，融合伙伴分開。
-        // 為了清楚呈現，我們在運動員表格內分出兩個區域: 正選運動員 與 跟操運動員 (加上標題列)
-        let athleteHtml = '';
-        // 正選運動員
-        athletes.forEach((ath, idx) => {
-            const stateKey = `athlete-${idx}`;
-            const curStatus = statusMap.get(stateKey) || "Yes";
-            athleteHtml += `<tr>
-                <td class="org-name">${ath.org}</td>
-                <td class="member-name">${ath.name}</td>
-                <td class="gender-icon">${formatGender(ath.gender)}</td>
-                <td>${renderStatusSelect(stateKey, curStatus)}</td>
-            </tr>`;
-        });
-        // 加入跟操運動員分隔線 (若要有明顯分類)
-        if(trialAthletes.length > 0) {
-            athleteHtml += `<tr style="background:#f1f7f4;"><td colspan="4" style="text-align:left; font-weight:bold;">🔰 跟操運動員</td></tr>`;
-            trialAthletes.forEach((tr, idx) => {
-                const stateKey = `trial-${idx}`;
-                const curStatus = statusMap.get(stateKey) || "Yes";
-                athleteHtml += `<tr>
-                    <td class="org-name">${tr.org}</td>
-                    <td class="member-name">${tr.name}</td>
-                    <td>${formatGender(tr.gender)}</td>
-                    <td>${renderStatusSelect(stateKey, curStatus)}</td>
-                </tr>`;
+    function renderTableData(tbodyId, dataArr, statusArr, type) {
+        const tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        dataArr.forEach((item, idx) => {
+            let currentStatus = statusArr[idx] || "Yes";
+            const row = tbody.insertRow();
+            // 機構名稱
+            const cellOrg = row.insertCell(0);
+            cellOrg.innerText = item.org;
+            cellOrg.className = "org-name";
+            // 姓名
+            const cellName = row.insertCell(1);
+            cellName.innerText = item.name;
+            // 性別
+            const cellGender = row.insertCell(2);
+            cellGender.innerHTML = `<span class="gender-badge">${item.gender === 'M' ? '男' : '女'}</span>`;
+            // 狀態下拉
+            const cellStatus = row.insertCell(3);
+            const select = document.createElement("select");
+            select.className = "status-select";
+            statusMap.forEach(st => {
+                const option = document.createElement("option");
+                option.value = st.value;
+                // 顯示文字: emoji + 文字標籤
+                option.text = `${st.emoji} ${st.label}`;
+                if (currentStatus === st.value) option.selected = true;
+                select.appendChild(option);
             });
-        }
-        document.getElementById('athleteTbody').innerHTML = athleteHtml;
-
-        // 融合伙伴表格
-        let partnerHtml = '';
-        partners.forEach((partner, idx) => {
-            const stateKey = `partner-${idx}`;
-            const curStatus = statusMap.get(stateKey) || "Yes";
-            partnerHtml += `<tr>
-                <td>${partner.org}</td>
-                <td>${partner.name}</td>
-                <td>${formatGender(partner.gender)}</td>
-                <td>${renderStatusSelect(stateKey, curStatus)}</td>
-            </tr>`;
-        });
-        document.getElementById('partnerTbody').innerHTML = partnerHtml;
-
-        // 綁定所有 select 變更事件
-        document.querySelectorAll('.status-select').forEach(select => {
-            select.removeEventListener('change', handleStatusChange);
-            select.addEventListener('change', handleStatusChange);
+            select.addEventListener("change", (e) => {
+                const newVal = e.target.value;
+                if (type === "athlete") athleteStatus[idx] = newVal;
+                else if (type === "trial") trialStatus[idx] = newVal;
+                else if (type === "partner") partnerStatus[idx] = newVal;
+                // 重新刷新文案可即時, 但保留即時更新可選, 但無需重新渲染表格
+            });
+            cellStatus.appendChild(select);
         });
     }
 
-    function handleStatusChange(e) {
-        const selectEl = e.target;
-        const id = selectEl.getAttribute('data-id');
-        const newStatus = selectEl.value;
-        if(id) {
-            statusMap.set(id, newStatus);
-        }
-        // 即時變更無需重新渲染全部，但為了保持emoj選單顯示統一，不需重繪（僅儲存）
-        // 可選擇更新顯示，但文字無需額外動作。但為了讓文案更新時抓最新狀態即可
+    // 初始化陣列預設出席 Yes
+    function initStatusArrays() {
+        athleteStatus = new Array(athletesData.length).fill("Yes");
+        trialStatus = new Array(trialAthletes.length).fill("Yes");
+        partnerStatus = new Array(partnersData.length).fill("Yes");
     }
 
-    // 取得所有當前狀態 (包括分類)
-    function getAllCurrentStatus() {
-        // 重新從DOM抓取最新狀態（確保任何手動變更都捕獲）
-        document.querySelectorAll('.status-select').forEach(select => {
-            const id = select.getAttribute('data-id');
-            if(id) statusMap.set(id, select.value);
+    // 取得目前所有狀態的最新值 (從DOM抓取, 確保同步)
+    function syncStatusFromDOM() {
+        // 運動員
+        const athleteSelects = document.querySelectorAll("#athleteTbody .status-select");
+        athleteSelects.forEach((sel, idx) => { if (athleteStatus[idx] !== undefined) athleteStatus[idx] = sel.value; });
+        const trialSelects = document.querySelectorAll("#trialTbody .status-select");
+        trialSelects.forEach((sel, idx) => { if (trialStatus[idx] !== undefined) trialStatus[idx] = sel.value; });
+        const partnerSelects = document.querySelectorAll("#partnerTbody .status-select");
+        partnerSelects.forEach((sel, idx) => { if (partnerStatus[idx] !== undefined) partnerStatus[idx] = sel.value; });
+    }
+
+    // 格式化推送文案 (整潔分類，各行列清晰，只出現一次emoji)
+    function generateWhatsAppText() {
+        syncStatusFromDOM();
+        const dateInput = document.getElementById("sessionDate").value;
+        const formattedDate = dateInput ? new Date(dateInput).toLocaleDateString('zh-HK', { year:'numeric', month:'long', day:'numeric' }) : "未選擇日期";
+        const venue = document.getElementById("venueSelect").value;
+        const coach = document.getElementById("coachSelect").value;
+        // 負責教練組合 加上emoji 一個
+        const coachEmoji = "🧑‍🏫";
+        let text = `🏑 *軟式曲棍球技術改良訓練班* 點名記錄\n`;
+        text += `📅 日期：${formattedDate}\n`;
+        text += `⏰ 時間：星期一丶六 (18:00-20:00)\n`;
+        text += `📍 地點：${venue}\n`;
+        text += `${coachEmoji} 負責教練：${coach}\n`;
+        text += `━━━━━━━━━━━━━━━━━━━━\n`;
+        // 運動員區塊
+        text += `▍🏅 運動員名單\n`;
+        athletesData.forEach((item, idx) => {
+            const statusVal = athleteStatus[idx];
+            const emoji = statusValueToEmoji[statusVal] || "❓";
+            const statusLabel = statusValueToLabel[statusVal] || statusVal;
+            text += `▪ ${item.org} / ${item.name} (${item.gender === 'M' ? '男' : '女'})  ${emoji} ${statusLabel}\n`;
         });
-        return statusMap;
-    }
-
-    // 生成精美 WhatsApp 文案 (完整格式，分類清晰，含emoji，機構/性別行列)
-    function generateWhatsAppMessage() {
-        getAllCurrentStatus(); // 同步最新狀態
-
-        const dateElem = document.getElementById('trainingDate').value;
-        const venue = document.getElementById('venueSelect').value;
-        const coachCombo = document.getElementById('coachSelect').value;
-        // 格式化日期 (YYYY-MM-DD -> 顯示年月日)
-        const formattedDate = dateElem ? dateElem.replace(/-/g, '/') : '未設定日期';
-        const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-        let weekdayStr = '';
-        if(dateElem) {
-            const d = new Date(dateElem);
-            if(!isNaN(d.getTime())) weekdayStr = ` (${weekdays[d.getDay()]})`;
-        }
-        
-        let msg = `🏑 *軟式曲棍球技術改良訓練班* 點名紀錄\n`;
-        msg += `📅 日期：${formattedDate}${weekdayStr}\n`;
-        msg += `⏰ 時間：18:00-20:00 (星期一、六)\n`;
-        msg += `🏟️ 地點：${venue}\n`;
-        msg += `👨‍🏫 負責教練：${coachCombo}\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-        
-        // 運動員區塊 (包含正選 + 跟操)
-        msg += `🏅 *運動員名單* ─────────────────\n`;
-        // 正選運動員
-        for(let i=0; i<athletes.length; i++) {
-            const ath = athletes[i];
-            const stateKey = `athlete-${i}`;
-            const statusVal = statusMap.get(stateKey) || "Yes";
-            const statusObj = STATUS_OPTIONS.find(opt => opt.value === statusVal);
-            const statusDisplay = statusObj ? `${statusObj.emoji} ${statusObj.label}` : `${statusVal}`;
-            msg += `▪ ${ath.org}｜${ath.name} (${ath.gender === 'M' ? '♂男' : '♀女'}) → ${statusDisplay}\n`;
-        }
-        // 跟操運動員 獨立子標題
-        if(trialAthletes.length) {
-            msg += `\n🔰 *跟操運動員* ─────────────────\n`;
-            for(let i=0; i<trialAthletes.length; i++) {
-                const tr = trialAthletes[i];
-                const stateKey = `trial-${i}`;
-                const statusVal = statusMap.get(stateKey) || "Yes";
-                const statusObj = STATUS_OPTIONS.find(opt => opt.value === statusVal);
-                const statusDisplay = statusObj ? `${statusObj.emoji} ${statusObj.label}` : `${statusVal}`;
-                msg += `▪ ${tr.org}｜${tr.name} (${tr.gender === 'M' ? '♂男' : '♀女'}) → ${statusDisplay}\n`;
-            }
-        }
-        
-        // 融合伙伴
-        msg += `\n🤝 *融合伙伴名單* ─────────────────\n`;
-        for(let i=0; i<partners.length; i++) {
-            const pt = partners[i];
-            const stateKey = `partner-${i}`;
-            const statusVal = statusMap.get(stateKey) || "Yes";
-            const statusObj = STATUS_OPTIONS.find(opt => opt.value === statusVal);
-            const statusDisplay = statusObj ? `${statusObj.emoji} ${statusObj.label}` : `${statusVal}`;
-            msg += `▪ ${pt.org}｜${pt.name} (${pt.gender === 'M' ? '♂男' : '♀女'}) → ${statusDisplay}\n`;
-        }
-        
-        msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-        // 自動產生時間
+        text += `\n▍🏋️ 跟操運動員名單\n`;
+        trialAthletes.forEach((item, idx) => {
+            const statusVal = trialStatus[idx];
+            const emoji = statusValueToEmoji[statusVal] || "❓";
+            const statusLabel = statusValueToLabel[statusVal] || statusVal;
+            text += `▪ ${item.org} / ${item.name} (${item.gender === 'M' ? '男' : '女'})  ${emoji} ${statusLabel}\n`;
+        });
+        text += `\n▍🤝 融合伙伴名單\n`;
+        partnersData.forEach((item, idx) => {
+            const statusVal = partnerStatus[idx];
+            const emoji = statusValueToEmoji[statusVal] || "❓";
+            const statusLabel = statusValueToLabel[statusVal] || statusVal;
+            text += `▪ ${item.org} / ${item.name} (${item.gender === 'M' ? '男' : '女'})  ${emoji} ${statusLabel}\n`;
+        });
+        // 生成時間
         const now = new Date();
-        const timeStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-        msg += `📌 此記錄由點名系統自動生成\n🕒 生成時間：${timeStr}`;
-        
-        return msg;
+        const timeStr = now.toLocaleString('zh-HK', { timeZone: 'Asia/Hong_Kong', hour12: false });
+        text += `\n━━━━━━━━━━━━━━━━━━━━\n`;
+        text += `📎 此記錄由點名系統自動生成\n🕒 文案生成時間：${timeStr}`;
+        return text;
     }
 
-    // 預覽更新
-    function updatePreview() {
-        const waText = generateWhatsAppMessage();
-        document.getElementById('waMessageContent').innerText = waText;
+    // 更新文案預覽區塊並更新時間
+    function updatePreviewAndTime() {
+        const waText = generateWhatsAppText();
+        document.getElementById("waPreview").innerText = waText;
+        const now = new Date();
+        const timeStr = now.toLocaleString('zh-HK', { timeZone: 'Asia/Hong_Kong' });
+        document.getElementById("generatedTime").innerText = timeStr;
+        return waText;
     }
 
-    // WhatsApp 分享功能 (嘗試使用 Web Share API 或者 自建 whataspp url)
-    function shareToWhatsApp() {
-        const waText = generateWhatsAppMessage();
-        // 編碼文字，使用 WhatsApp 自訂連結
-        const encodedMsg = encodeURIComponent(waText);
-        // 手機/網頁版 whatsapp
-        const whatsappUrl = `https://wa.me/?text=${encodedMsg}`;
-        window.open(whatsappUrl, '_blank');
+    // 推送至WhatsApp (使用自訂URL)
+    function pushToWhatsApp() {
+        const fullText = generateWhatsAppText();
+        // 編碼URI
+        const encodedMsg = encodeURIComponent(fullText);
+        // WhatsApp 手機端連結, 若是網頁版可改用 https://web.whatsapp.com/send?text=...
+        // 最佳實務: 使用 whatsapp://send?text= 手機; 此處支援手機/桌面
+        const waUrl = `https://wa.me/?text=${encodedMsg}`;
+        window.open(waUrl, '_blank');
     }
 
-    // 事件監聽 & 初始化
-    function bindEvents() {
-        document.getElementById('generateWaBtn').addEventListener('click', () => {
-            updatePreview();
-        });
-        document.getElementById('sendWhatsAppBtn').addEventListener('click', () => {
-            // 先更新預覽確保最新文案
-            updatePreview();
-            shareToWhatsApp();
-        });
-        // 日期變更時可即時更新預覽 (可選)
-        document.getElementById('trainingDate').addEventListener('change', () => updatePreview());
-        document.getElementById('venueSelect').addEventListener('change', () => updatePreview());
-        document.getElementById('coachSelect').addEventListener('change', () => updatePreview());
-    }
-
-    // 頁面載入完整初始化
+    // 設定日期預設: 今日或指定星期一? 預設下個星期一? 可以設為 2025-03-31展示
+    // 額外: 地點只有九龍灣體育館
+    // 初始化所有下拉選項及事件
     function init() {
-        initStatus();
-        renderTables();
-        bindEvents();
-        // 預設生成文案顯示
-        updatePreview();
+        initStatusArrays();
+        renderTable();
+        // 預設教練組合第一個為彭家威丶何昌恆
+        const coachSelect = document.getElementById("coachSelect");
+        if (coachSelect) coachSelect.value = "彭家威丶何昌恆";
+        // 綁定按鈕
+        const genBtn = document.getElementById("generateWABtn");
+        const pushBtn = document.getElementById("pushWhatsAppBtn");
+        genBtn.addEventListener("click", () => {
+            updatePreviewAndTime();
+        });
+        pushBtn.addEventListener("click", () => {
+            pushToWhatsApp();
+        });
+        // 初始預覽文案
+        updatePreviewAndTime();
+        // 監聽地點/教練/日期改變時自動刷新預覽（可選）
+        const datePicker = document.getElementById("sessionDate");
+        const venueSel = document.getElementById("venueSelect");
+        const coachSel = document.getElementById("coachSelect");
+        const refreshPreview = () => updatePreviewAndTime();
+        datePicker.addEventListener("change", refreshPreview);
+        venueSel.addEventListener("change", refreshPreview);
+        coachSel.addEventListener("change", refreshPreview);
+        // 額外監聽狀態變化：動態透過事件代理，但由於下拉變更時呼叫sync後刷新文案即可；使用者每次點按生成或推送前會sync，所以亦可提供即時按生成刷新。但為了直觀，可以在select變更時立即更新預覽
+        document.body.addEventListener("change", (e) => {
+            if (e.target && e.target.classList && e.target.classList.contains("status-select")) {
+                updatePreviewAndTime();
+            }
+        });
     }
 
     init();
